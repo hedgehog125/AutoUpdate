@@ -11,7 +11,7 @@ Next you must specify the database... e.g:
 
 https://raw.githubusercontent.com/hedgehog125/AutoUpdateExample
 
-If you want to run localy you can use file:///
+If you want to run locally you can use file:///
 
 So add to your code:
 
