@@ -1,6 +1,6 @@
 # Released under cc licence: https://creativecommons.org/
 # Made by @hedgehog125 on github.com and scratch.mit.edu
-import urllib.request, os, shutil
+import urllib.request, os, shutil, ast
 from time import sleep
 database = "unknown"
 FileList = ""
@@ -33,7 +33,7 @@ def GetFileList():
     global updates
     print("Retrieving file list...")
     FileList = Get_Web_Info(database + "Files.txt")
-    FileList = eval(FileList)
+    FileList = ast.literal_eval(FileList)
     
 def CheckForUpdates():
     global Updates
@@ -46,7 +46,7 @@ def CheckForUpdates():
     Latest = Updates[len(Updates)-1]
     Downloaded = Open_File("Versions.txt",False,"")[0]
     if len(Downloaded) > 0:
-        Downloaded = eval(Downloaded)
+        Downloaded = ast.literal_eval(Downloaded)
     else:
         Downloaded = []
     new = []
