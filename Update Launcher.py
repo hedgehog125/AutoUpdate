@@ -59,7 +59,7 @@ for i in os.walk(folder):
         for item in i[2]:
             if item[0] != ".":
                 files.append(currentPath + item)
-                fileList.append([True,currentPath +item, URL(database + "/" + currentPath + item), True])
+                fileList.append([True,currentPath + item, URL(database + "/" + currentPath + "Assets/" + item), True])
                 filesScanned = filesScanned + 1
                 printDelay = printDelay + 1
         if printDelay >= 50:
