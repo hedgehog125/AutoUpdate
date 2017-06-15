@@ -21,6 +21,19 @@ Then run init()...
 
 AutoUpdate.init()
 This will check for updates and download new versions.
+You can also pass a function through it and you can use it to edit the messages e.g:
+
+def displayMessage(mess):
+  print("AutoUpdate says... " + mess)
+  
+AutoUpdate.init(displayMessage)
+  
+Or maybe you don't want to display messages...
+
+def youCanCallThisWhateverYouLike(mess):
+  return
+  
+AutoUpdate.init(youCanCallThisWhateverYouLike)
 
 Check Auto-Update/Test.py for an example.
 
