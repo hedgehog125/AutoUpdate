@@ -28,19 +28,19 @@ def Open_File(File,Write,Text):
     f.close()
 
 
-def GetFileList():
+def GetFileList(messageReceiver):
     global FileList
     global updates
-    print("Retrieving file list...")
+    messageReceiver("Retrieving file list...")
     FileList = Get_Web_Info(database + "Files.txt")
     FileList = ast.literal_eval(FileList)
     
-def CheckForUpdates():
+def CheckForUpdates(messageReceiver):
     global Updates
     global Latest
     global Downloaded
     global new
-    print("Checking for updates...")
+    messageReceiver("Checking for updates...")
     Updates = Get_Web_Info(database + "Versions.txt")
     Updates = Updates.split(",")
     Latest = Updates[len(Updates)-1]
@@ -55,14 +55,14 @@ def CheckForUpdates():
             new.append(Updates[i + len(Downloaded)])
     if len(new) > 0:
         if len(new) == 1:
-            print("1 update found!")
+            messageReceiver("1 update found!")
         else:
-            print(str(len(new)) + " updates found!")
+            messageReceiver(str(len(new)) + " updates found!")
     else:
-        print("No updates found.")
+        messageReceiver("No updates found.")
 
-def GetFiles():
-    print("Downloading files...")
+def GetFiles(messageReceiver):
+    messageReceiver("Downloading files...")
     for v in new:
         ver = str(v)
         if ver in FileList:
@@ -78,29 +78,29 @@ def GetFiles():
                     try:
                         os.makedirs("Assets/" + FileList[ver][i][1])
                     except:
-                        print("Tampered files detected.")
-                        print("Restoring...")
-                        print("")
+                        messageReceiver("Tampered files detected.")
+                        messageReceiver("Restoring...")
+                        messageReceiver("")
                         shutil.rmtree("Assets")
                         sleep(0.5)
                         os.makedirs("Assets")
                         return True
 
     if len(new) == 1:
-        print("Update installed!")
+        messageReceiver("Update installed!")
     else:
-        print("Updates installed!")
-    print("Updating installed file...")
+        messageReceiver("Updates installed!")
+    messageReceiver("Updating installed file...")
     Open_File("Versions.txt",True,str(Updates))
-    print("Done!")
+    messageReceiver("Done!")
     return False
 
-def init():
+def init(messageReceiver = print):
     if (database == "unknown"):
         return
-    CheckForUpdates()
+    CheckForUpdates(messageReceiver)
     sleep(0.5)
     if len(new) > 0:
-        GetFileList()
-        if GetFiles():
-            init()
+        GetFileList(messageReceiver)
+        if GetFiles(messageReceiver):
+            init(messageReceiver)
